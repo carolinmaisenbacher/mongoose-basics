@@ -78,9 +78,36 @@ We can now define different routes for different database operations
 
 Will create an Ingredient "Banana Flour"
 
+```
+app.get("/create", (req, res) => {
+  // create new Document
+  const ingredient = new Ingredient({
+    name: "Banana Flour",
+    amount: 502
+  });
+
+  // save it
+  ingredient
+    .save()
+    .then(result => res.status(200).json({ docs: [ingredient] }))
+    .catch(err => console.log(err));
+});
+```
+
 #### `localhost:8888/`
 
 You get a list of all ingredients
+
+```
+app.get("/", (req, res) => {
+  // get all ingredients
+  Ingredient.find()
+    // exec returns a promise, find() returns a query type
+    .exec()
+    .then(docs => res.status(200).json({ docs }))
+    .catch(err => console.log(err));
+});
+```
 
 #### `localhost:8888/delete`
 
