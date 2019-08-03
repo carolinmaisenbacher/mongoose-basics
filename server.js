@@ -32,6 +32,29 @@ app.get("/", (req, res) => {
     .catch(err => console.log(err));
 });
 
+app.get("/delete/:id", (req, res) => {
+  const id = req.params.id;
+  Ingredient.findById(id)
+    .exec()
+    .then(doc => {
+      if (doc) {
+        doc.remove();
+        res.status(200).json({ deleted: true });
+      } else {
+        res.status(401).json({
+          message: `Document with id ${id} not found`,
+          deleted: false
+        });
+      }
+    })
+    .catch(err => {
+      res.status(401).json({
+        message: `Invalid id`,
+        deleted: false
+      });
+    });
+});
+
 app.listen(8888, () =>
   console.log("Server is running at http://localhost:8888")
 );

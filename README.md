@@ -113,8 +113,29 @@ app.get("/", (req, res) => {
 
 Deletes an Ingredient by ID
 
+```
+app.get("/delete/:id", (req, res) => {
+  const id = req.params.id;
+  Ingredient.findById(id)
+    .exec()
+    .then(doc => {
+      if (doc) {
+        doc.remove();
+        res.status(200).json({ deleted: true });
+      } else { … }
+    })
+    .catch(err => { … });
+});
+```
+
 #### `localhost:8888/update`
 
 will update an Ingredient to have the title "Apple Pie".
 
 Try it out :).
+
+#### Source
+
+I looked at many different introductions, here are a few of them
+https://www.opencodez.com/javascript/simple-crud-application-using-node-js-mongoose.htm
+https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose
