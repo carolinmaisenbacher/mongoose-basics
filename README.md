@@ -109,7 +109,7 @@ app.get("/", (req, res) => {
 });
 ```
 
-#### `localhost:8888/delete`
+#### `localhost:8888/delete/:id`
 
 Deletes an Ingredient by ID
 
@@ -128,9 +128,22 @@ app.get("/delete/:id", (req, res) => {
 });
 ```
 
-#### `localhost:8888/update`
+#### `localhost:8888/update/:id`
 
-will update an Ingredient to have the title "Apple Pie".
+will update a specific Ingredient to have the name "Apple Pie".
+
+```
+app.get("/update/:id", (req, res) => {
+  const id = req.params.id;
+  Ingredient.findByIdAndUpdate(id, { name: "Strawberry Crumble" })
+    .then(doc => {
+      res.json({ doc });
+    })
+    .catch(err => {
+      res.status(401).json({ message: `Invalid id` });
+    });
+});
+```
 
 Try it out :).
 

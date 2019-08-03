@@ -55,6 +55,17 @@ app.get("/delete/:id", (req, res) => {
     });
 });
 
+app.get("/update/:id", (req, res) => {
+  const id = req.params.id;
+  Ingredient.findByIdAndUpdate(id, { name: "Strawberry Crumble" })
+    .then(doc => {
+      res.json({ doc });
+    })
+    .catch(err => {
+      res.status(401).json({ message: `Invalid id` });
+    });
+});
+
 app.listen(8888, () =>
   console.log("Server is running at http://localhost:8888")
 );
